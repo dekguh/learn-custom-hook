@@ -14,5 +14,10 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'quotes': ['error', 'single'],
+    'no-empty': ['error'],
+    'semi': ['error', 'never'],
+    'indent': ['error', 2],
+    'jsx-quotes': ['error', 'prefer-single']
   },
 }
