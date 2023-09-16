@@ -1,34 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import useConnection from './hook/useConnection'
+import useStateDebounce from './hook/useStateDebounce'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const statusConnection = useConnection()
+  const [debounceValue, tempValue, setTempValue] = useStateDebounce('', 500)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='flex'>
+      <div className='flex-grow-0 p-2'>
+        status: <span data-testid='statusId' className={`block font-bold ${statusConnection ? 'text-green-500' : 'text-red-500'}`}>
+          {statusConnection ? 'online' : 'offline'}
+        </span>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      <div className='flex-grow-0 p-2'>
+        <input
+          type='text'
+          className='w-[200px] border-[1px]'
+          value={tempValue}
+          onChange={event => setTempValue(event.target.value)}
+          data-testid='inputId'
+        />
+        <span className='block' data-testid='resultId'>result: {debounceValue}</span>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
